@@ -1,0 +1,204 @@
+
+<!--<div class="grid">
+
+<div class="col-12"><div class="card">
+<h5>Gestion Des Fichiers</h5>
+
+<p-toolbar styleClass="mb-4">
+<ng-template pTemplate="left">
+<button pButton pRipple label="Charger un fichier" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew();getAllFichierName()"></button>
+</ng-template>
+
+</p-toolbar>
+<p-table *ngIf="!tableau">
+<ng-template pTemplate="header">
+
+<p class="vides">La liste des Fichiers Non Certifiés est vide</p>
+
+
+</ng-template>
+
+</p-table>
+<p-progressSpinner *ngIf="loading==true" class="spinner"></p-progressSpinner>
+
+<p-table  #dt [value]="fichiers" [paginator]="true" [rows]="10"  [globalFilterFields]="['montantGlobal','evenement','dateChargement']" responsiveLayout="scroll"
+[(selection)]="selectedClasses" [rowHover]="true" dataKey="id" *ngIf="loading==false && tableau"
+[rowsPerPageOptions]="[10,25,50]">
+<ng-template pTemplate="caption">
+<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+<h5 class="m-0">Liste des Fichiers Chargés</h5>
+<span class="block mt-2 md:mt-0 p-input-icon-left">
+<i class="pi pi-search"></i>
+<input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Recherche..." />
+</span>
+</div>
+</ng-template>
+<ng-template pTemplate="header">
+<tr>
+<th style="width: 3rem">
+    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+</th>
+
+<th pSortableColumn="evenement"> Evenement <p-sortIcon field="evenement"></p-sortIcon></th>
+<th pSortableColumn="montantGlobal">Montant Global(FCFA) <p-sortIcon field="montantGlobal"></p-sortIcon></th>
+<th pSortableColumn="nomFichier"> Nom Fichier <p-sortIcon field="nomFichier"></p-sortIcon></th>
+              <th pSortableColumn="dateChargement"> Date Chargement <p-sortIcon field="dateChargement"></p-sortIcon></th>-->
+    <!--
+    <th pSortableColumn="certification"> Certification <p-sortIcon field="certification"></p-sortIcon></th>
+    <th>Actions</th>
+
+</tr>
+</ng-template>
+<ng-template pTemplate="body" let-fichier>
+<tr>
+    <td>
+        <p-tableCheckbox [value]="fichier"></p-tableCheckbox>
+    </td>
+    <td>{{fichier.evenement.moisCampagne}} - {{fichier.evenement.anneeCampagne}}</td>
+    <td>{{fichier.montantGlobal.toLocaleString('fr-FR')}}</td>
+    <td>{{fichier.nomFichier}}</td>
+    <td>{{fichier.dateChargement | date: 'dd/MM/yyyy'}}</td>
+                    <td class="text-center" style="min-width: 8rem;">
+                        <i class="pi" [ngClass]="{'true-icon pi-check-circle text-green-500': fichier.certification, 'false-icon pi-times-circle text-pink-500 ': !fichier.certification}"></i>
+                    </td>
+                    <td>
+                        <button pButton pRipple icon="pi pi-bookmark-fill" class="p-button-rounded p-button-primary"  (click)="getDetailFichier(fichier)" pTooltip="Détails" ></button>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+        </p-table>
+
+    </div>
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Charger un fichier" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew2()"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="Cg_journals" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['objet','libelle','representative.name','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Affichage des {first} aux {last}èmes des  {totalRecords} entrées" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Journal compta genéral</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Rechercher..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="montant">Montant <p-sortIcon field="montant"></p-sortIcon></th>
+                        <th pSortableColumn="centrecout">Centre de Coût <p-sortIcon field="centrecout"></p-sortIcon></th>
+                        <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                        <th pSortableColumn="libelle">Libelle <p-sortIcon field="libelle"></p-sortIcon></th>
+                        <th pSortableColumn="numcompte">Numero Compte <p-sortIcon field="numcompte"></p-sortIcon></th>
+                        <th pSortableColumn="caisse_id">Caisse_id <p-sortIcon field="caisse_id"></p-sortIcon></th>
+                        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+                        <th pSortableColumn="user_id">User_id <p-sortIcon field="user_id"></p-sortIcon></th>
+                        <th pSortableColumn="compte">Compte <p-sortIcon field="compte"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-journal>
+                    <tr>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Montant</span>{{journal.montant}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Centre de Coût</span>{{journal.centrecout}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Date</span>{{journal.date}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Libelle</span>{{journal.libelle}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Numero Compte</span>{{journal.numcompte}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Caisse_id</span>{{journal.caisse_id}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Nombre</span>{{journal.nombre}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">User_id</span>{{journal.user_id}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Compte</span><div *ngIf="journal.compte">{{journal.compte.objet}}  ({{journal.compte.libelle}})</div> </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editCompte(journal)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="CompteDialog" [style]="{width: '1000px;'}" header="Compte Général" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="p-formgrid grid">
+                    <div class="field col ">
+                        <label for="objet">Objet <span style="color: red"> *</span></label>
+                        <input type="text" pInputText id="objet" [(ngModel)]="Cgjournal.objet" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !Cgjournal.objet}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !Cgjournal.objet">L'objet doit être renseigné.</small>
+                    </div>
+                    <div class="field col">
+                        <label for="libelle">Libelle <span style="color: red"> *</span></label>
+                        <input type="text" pInputText id="libelle" [(ngModel)]="Cgjournal.libelle" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !Cgjournal.libelle}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !Cgjournal.libelle">Le libelle doit être renseigné.</small>
+                    </div>
+                </div>
+                <div class="p-formgrid grid">
+                    <div class="field col ">
+                        <label for="salaire">Code Salaire <span style="color: red"> *</span></label>
+                        <input type="text" pInputText id="salaire" [(ngModel)]="Cgjournal.codesalaire" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !Cgjournal.codesalaire}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !Cgjournal.codesalaire">Le code salaire est obligatoire.</small>
+                    </div>
+                    <div class="field col ">
+                        <label for="Chapeau">Chapeau <span style="color: red"> *</span></label>
+                        <p-autoComplete appendTo="body"  [(ngModel)]="Cgjournal.chapeau" [virtualScroll]="true" [suggestions]="filteredItems" [virtualScrollItemSize]="34" (completeMethod)="filterItems($event)" field="label" [dropdown]="true"></p-autoComplete>
+                    </div>
+                </div>
+                <div class="p-formgrid grid">
+                    <div class="field col ">
+                        <label for="CpCompte">CpCompte <span style="color: red"> *</span></label>
+                        <p-autoComplete appendTo="body"  [(ngModel)]="Cgjournal.cpCompte" [virtualScroll]="true" [suggestions]="filteredItems" [virtualScrollItemSize]="34" (completeMethod)="filterItems($event)" field="label" [dropdown]="true"></p-autoComplete>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple type="button" label="Annuler" icon="pi pi-times"  class="p-button-danger" (click)="hideDialog()"></button>
+                <button pButton pRipple type="button" label="Enregistrer" icon="pi pi-check"  class="p-button-success" (click)="saveCompte()"></button>
+            </ng-template>
+        </p-dialog>
+        <p-dialog [(visible)]="ImportDialog" [style]="{width: '800px'}" header="Charger un fichier" [modal]="true" styleClass="p-fluid">
+            <ng-template pTemplate="content" >
+                <div class="p-field p-col" >
+                    <div class="p-formgrid grid">
+                        <div class="field col ">
+                            <label for="monthpicker"><b>Choisir Date</b></label>
+                            <p-calendar appendTo="body"  view="month" dateFormat="mm/yy" [readonlyInput]="true" inputId="monthpicker" placeholder="Date"></p-calendar>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-field p-col">
+                    <h5>Fichier</h5>
+                    <div class="p-field p-col">
+                  <h5>Fichier</h5>
+                   <p-fileUpload mode="basic" chooseLabel="upload" name="myfile[]" (onUpload)="onFileChange($event)"></p-fileUpload>  &lt;!&ndash;     url="./upload.php"&ndash;&gt;
+                    <input (change)="onUpload($event)" class="form-control form-control-lg" id="formFileLg" type="file">
+                    <span class="p-error" *ngIf="charger==false" style="">Ce fichier a dejà été chargé</span>
+                </div>
+                <p-fileUpload name="demo[]" url="./upload.php" (onUpload)="onUpload($event)" accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" maxFileSize="1000000"></p-fileUpload>
+            </div></ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text p-button-danger" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Enregistrer" *ngIf="charger==false" disabled icon="pi pi-check" class="p-button-text" (click)="saveBeneficiaire(beneficiaire)"></button>
+                <button pButton pRipple label="Enregistrer" *ngIf="charger2==true"  icon="pi pi-check" class="p-button-text" (click)="saveBeneficiaire(beneficiaire)" ></button>
+
+            </ng-template>
+        </p-dialog>
+
+    </div>
+</div>
+-->

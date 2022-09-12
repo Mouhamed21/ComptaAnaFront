@@ -1,0 +1,65 @@
+{
+	"data": [
+        {
+            "compte": 601110,
+            "libelle": "Achat stocke timbre affranch.",
+            "source": "DAA",
+            "code": ""
+        },
+        {
+            "compte": 601140,
+            "libelle": "Achat paquet embal. postaux",
+            "source": "DAA",
+            "code": ""
+        },
+        {
+            "compte": 601168,
+            "libelle": "Achats Telephones Portables",
+            "source": "DAA",
+            "code": ""
+        },
+        {
+            "compte": 601170,
+            "libelle": "Achat cartes POSTECASH",
+            "source": "DAA",
+            "code": ""
+        },
+        {
+            "compte": 601181,
+            "libelle": "Achat de SIM",
+            "source": "DAA",
+            "code": ""
+        },
+        {
+            "compte": 601182,
+            "libelle": "Achat Carte de Recharge",
+            "source": "DAA",
+            "code": ""
+        },
+        {
+            "compte": 601220,
+            "libelle": "Achat articles philat.huemoa",
+            "source": "DAA",
+            "code": ""
+        },
+
+        {
+            "compte": 602120,
+            "libelle": "Matiere&FournImprimerie",
+            "source": "DAA",
+            "code": ""
+        },
+        {
+            "compte": 604112,
+            "libelle": "Achat st Coup. Réponse",
+            "source": "DAA",
+            "code": ""
+        },
+        {
+            "compte": 604120,
+            "libelle": "Achat st lubrifiant",
+            "source": "DAA",
+            "code": ""
+        }
+    ]
+}

@@ -1,0 +1,61 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="parametreNiveaux" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['objet','libelle','representative.name','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Affichage des {first} aux {last}èmes des  {totalRecords} entrées" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Liste Des Niveaux</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Rechercher..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="libelle">Libelle <p-sortIcon field="libelle"></p-sortIcon></th>
+                        <th>Actions</th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-parametreNiveau>
+                    <tr>
+                        <td ><span class="p-column-title">Libelle</span>{{parametreNiveau.libelle}}</td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editParametreNiveau(parametreNiveau)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="parametreNiveauDialog" [style]="{width: '1000px;'}" header="Ajout d'un niveau" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="p-formgrid grid">
+                    <div class="field col ">
+                        <label for="libelle">Libelle <span style="color: red"> *</span></label>
+                        <input type="text" pInputText id="libelle" [(ngModel)]="parametreNiveau.libelle" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !parametreNiveau.libelle}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !parametreNiveau.libelle">Le libelle doit être renseigné.</small>
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button pButton pRipple type="button" label="Annuler" icon="pi pi-times"  class="p-button-danger" (click)="hideDialog()"></button>
+                <button pButton pRipple type="button" label="Enregistrer" icon="pi pi-check"  class="p-button-success" (click)="postParametreNiveau()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
+

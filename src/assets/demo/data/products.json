@@ -1,0 +1,124 @@
+{
+	"data": [
+		{
+			"objet": "1001B",
+			"description": "Vente Timbres Postes",
+			"modepaiement": "",
+			"souscompte": "",
+			"typeoperation": "bamboo-watch.jpg",
+			"action": "",
+			"typecompte": "RECETTES BUDGETAIRES",
+            "souscompte1": "",
+            "chapeau": 0,
+            "souscompte2": ""
+		},
+		{
+            "objet": "1001B",
+            "description": "TP  vendus / Esp",
+            "modepaiement": "Espèce",
+            "souscompte": 1,
+            "typeoperation": "bamboo-watch.jpg",
+            "action": "Augmentation Numéraire",
+            "typecompte": "RECETTES BUDGETAIRES",
+            "souscompte1": "",
+            "chapeau": 0,
+            "souscompte2": ""
+		},
+		{
+            "objet": "1001B",
+            "description": "TP  vendus / Chq",
+            "modepaiement": "Chèque",
+            "souscompte": 2,
+            "typeoperation": "bamboo-watch.jpg",
+            "action": "Augmentation Chèques",
+            "typecompte": "RECETTES BUDGETAIRES",
+            "souscompte1": "",
+            "chapeau": 0,
+            "souscompte2": ""
+		},
+		{
+            "objet": "1001B",
+            "description": "TP  vendus / BV",
+            "modepaiement": "Bon vert",
+            "souscompte": 3,
+            "typeoperation": "bamboo-watch.jpg",
+            "action": "Augmentation Bon Vert",
+            "typecompte": "RECETTES BUDGETAIRES",
+            "souscompte1": "",
+            "chapeau": 0,
+            "souscompte2": ""
+		},
+		{
+            "objet": "1001D",
+            "description": "Timbres Poste Vendus",
+            "modepaiement": "",
+            "souscompte": "",
+            "typeoperation": "bamboo-watch.jpg",
+            "action": "Diminution Timbres Poste",
+            "typecompte": "DEPENSES",
+            "souscompte1": "",
+            "chapeau": 0,
+            "souscompte2": ""
+		},
+		{
+            "objet": "1001T",
+            "description": "Timbres Poste Reçus",
+            "modepaiement": "",
+            "souscompte": "",
+            "typeoperation": "bamboo-watch.jpg",
+            "action": "Augmentation Timbres Poste",
+            "typecompte": "RECETTES DE TRESORERIE",
+            "souscompte1": "",
+            "chapeau": 0,
+            "souscompte2": ""
+		},
+		{
+            "objet": "1002D",
+            "description": "Remise sur Vte TP",
+            "modepaiement": "",
+            "souscompte": "",
+            "typeoperation": "bamboo-watch.jpg",
+            "action": "Diminution Numéraire",
+            "typecompte": "DEPENSES",
+            "souscompte1": "",
+            "chapeau": 0,
+            "souscompte2": ""
+		},
+		{
+            "objet": "1003B",
+            "description": "Vte Arts Philat",
+            "modepaiement": "",
+            "souscompte": "",
+            "typeoperation": "bamboo-watch.jpg",
+            "action": "",
+            "typecompte": "RECETTES BUDGETAIRES",
+            "souscompte1": "",
+            "chapeau": 0,
+            "souscompte2": ""
+		},
+        {
+            "objet": "1003B",
+            "description": "Vte Arts Philat / Esp",
+            "modepaiement": "Espèce",
+            "souscompte": 1,
+            "typeoperation": "bamboo-watch.jpg",
+            "action": "Augmentation Numéraire",
+            "typecompte": "RECETTES BUDGETAIRES",
+            "souscompte1": "",
+            "chapeau": 0,
+            "souscompte2": ""
+        },
+        {
+            "objet": "1003B",
+            "description": "Vte Arts Philat / Chq",
+            "modepaiement": "Chèque",
+            "souscompte": 2,
+            "typeoperation": "bamboo-watch.jpg",
+            "action": "Augmentation Chèques",
+            "typecompte": "RECETTES BUDGETAIRES",
+            "souscompte1": "",
+            "chapeau": 0,
+            "souscompte2": ""
+        }
+    ]
+}

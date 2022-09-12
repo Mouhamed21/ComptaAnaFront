@@ -1,0 +1,119 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="p-formgrid grid">
+                        <div class="field col ">
+                            <p-autoComplete appendTo="body" InputId="mois" [(ngModel)]="moisb"  [virtualScroll]="true" [suggestions]="mois" [virtualScrollItemSize]="34" (completeMethod)="filterItems($event)" field="label" [dropdown]="true" [ngClass]="{'ng-invalid ng-dirty' : echec && !moisb}"></p-autoComplete>
+                            <small class="p-error" *ngIf="echec && !moisb">Saisir un mois pour afficher le journal.</small>
+                        </div>
+                        <div class="field col ">
+                                <p-calendar [(ngModel)]="dateb" view="year" dateFormat="yy" inputId="annee" [ngClass]="{'ng-invalid ng-dirty' : echec && !dateb}"></p-calendar>
+                                <small class="p-error" *ngIf="echec && !dateb">Saisir l'année pour afficher le journal.</small>
+                        </div>
+                        <div class="field col ">
+                            <button pButton pRipple type="button" label="Rechercher" id="truc"  icon="pi pi-search" class="p-button-raised" (click)="cherher()"></button>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+        </div>
+        <div class="card" *ngIf="tableau==true">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Charger un fichier" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew2()"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="Cg_journals" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['objet','libelle','representative.name','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Affichage des {first} aux {last}èmes des  {totalRecords} entrées" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Journal compta genéral</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Rechercher..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                        <th pSortableColumn="centrecout">Centre de Coût <p-sortIcon field="centrecout"></p-sortIcon></th>
+                        <th pSortableColumn="montant">Montant <p-sortIcon field="montant"></p-sortIcon></th>
+                        <th pSortableColumn="numcompte">Numero Compte <p-sortIcon field="numcompte"></p-sortIcon></th>
+                        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+                        <th pSortableColumn="compte">Compte <p-sortIcon field="compte"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-journal>
+                    <tr>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Date</span>{{journal.date}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Centre de Coût</span>{{journal.centreCout}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Montant</span>{{journal.montant}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Numero Compte</span>{{journal.numcompte}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Nombre</span>{{journal.nombre}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Compte</span><div *ngIf="journal.compte">{{journal.compte.objet}} ({{journal.compte.libelle}})</div> </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editCompte(journal)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <p-dialog [(visible)]="CompteDialog" [style]="{width: '1000px;'}" header="Compte Général" [modal]="true" class="p-fluid">
+                <ng-template pTemplate="content">
+                    <div class="p-formgrid grid">
+                        <div class="field col ">
+                            <label for="date">Date <span style="color: red"> *</span></label>
+                            <p-calendar [(ngModel)]="Cgjournal.date" view="month" dateFormat="mm/yy" [readonlyInput]="true" inputId="date" [ngClass]="{'ng-invalid ng-dirty' : submitted && !Cgjournal.date}"></p-calendar>
+                            <small class="ng-dirty ng-invalid" *ngIf="submitted && !Cgjournal.date">L'objet doit être renseigné.</small>
+                        </div>
+                        <div class="field col ">
+                            <label for="centrecout">Compte <span style="color: red"> *</span></label>
+                            <p-autoComplete appendTo="body"  [(ngModel)]="Cgjournal.compte" [virtualScroll]="true" [suggestions]="filteredItems" [virtualScrollItemSize]="34" (completeMethod)="filterItemsCompte($event)" field="objet" [dropdown]="true"></p-autoComplete>
+                        </div>
+                    </div>
+                    <div class="p-formgrid grid">
+                        <div class="field col ">
+                            <label for="objet">Montant <span style="color: red"> *</span></label>
+                            <input type="text" pInputText id="montant" [(ngModel)]="Cgjournal.montant" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !Cgjournal.montant}"/>
+                            <small class="ng-dirty ng-invalid" *ngIf="submitted && !Cgjournal.montant">L'objet doit être renseigné.</small>
+                        </div>
+                    </div>
+                    <div class="p-formgrid grid">
+                        <div class="field col ">
+                            <label for="objet">Numero Compte </label>
+                            <input type="text" pInputText id="objet" [(ngModel)]="Cgjournal.numcompte" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !Cgjournal.numcompte}"/>
+                            <small class="ng-dirty ng-invalid" *ngIf="submitted && !Cgjournal.numcompte">L'objet doit être renseigné.</small>
+                        </div>
+                        <div class="field col">
+                            <label for="libelle">Nombre</label>
+                            <input type="text" pInputText id="nombre" [(ngModel)]="Cgjournal.nombre" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !Cgjournal.nombre}"/>
+                            <small class="ng-dirty ng-invalid" *ngIf="submitted && !Cgjournal.nombre">Le libelle doit être renseigné.</small>
+                        </div>
+                    </div>
+                    <div class="p-formgrid grid">
+                        <div class="field col ">
+                            <label for="compte">Compte <span style="color: red"> *</span></label>
+                            <p-autoComplete appendTo="body"  [(ngModel)]="Cgjournal.compte" [virtualScroll]="true" [suggestions]="filteredItems" [virtualScrollItemSize]="34" (completeMethod)="filterItemsCompte($event)" field="objet" [dropdown]="true"></p-autoComplete>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple type="button" label="Annuler" icon="pi pi-times"  class="p-button-danger" (click)="hideDialog()"></button>
+                    <button pButton pRipple type="button" label="Enregistrer" icon="pi pi-check"  class="p-button-success" (click)="saveCompte()"></button>
+                </ng-template>
+            </p-dialog>
+        </div>
+
+    </div>
+</div>

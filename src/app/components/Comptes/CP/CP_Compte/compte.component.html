@@ -1,0 +1,104 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Nouveau" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="Comptes_cp" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedProducts" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Manage Products</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="Objet">Objet <p-sortIcon field="Objet"></p-sortIcon></th>
+                        <th pSortableColumn="libelle">Description <p-sortIcon field="libelle"></p-sortIcon></th>
+                        <th pSortableColumn="ModePaiement">Mode Paiement <p-sortIcon field="ModePaiement"></p-sortIcon></th>
+                        <th pSortableColumn="SousCommpte">Sous Compte <p-sortIcon field="SousCommpte"></p-sortIcon></th>
+                        <th pSortableColumn="libelle">Code <p-sortIcon field="code"></p-sortIcon></th>
+                        <th pSortableColumn="Action">Action <p-sortIcon field="Action"></p-sortIcon></th>
+                        <th pSortableColumn="TypeCompte">Type Compte <p-sortIcon field="TypeCompte"></p-sortIcon></th>
+                        <th pSortableColumn="Chapeau">Chapeau <p-sortIcon field="Chapeau"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-compte>
+                    <tr>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Objet</span>{{compte.objet}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Description</span>{{compte.description}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Mode Paiement</span>{{compte.modepaiement}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Sous Compte</span>{{compte.souscompte}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>{{compte.code}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Action</span>{{compte.action}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Type Compte</span>{{compte.typecompte}}</td>
+                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Chapeau</span>{{compte.chapeau}}</td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="CompteDialog" [style]="{width: '1000px;'}" header="Compte Postal" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="p-formgrid grid">
+                    <div class="field col ">
+                        <label for="objet">Objet <span style="color: red"> *</span></label>
+                        <input type="text" pInputText id="objet"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !structure.email">Email est obligatoire.</small>
+                    </div>
+                    <div class="field col">
+                        <label for="libelle">Libelle <span style="color: red"> *</span></label>
+                        <input type="text" pInputText id="libelle" />
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !structure.telephone">Telephone est obligatoire et doit comporter 9 chiffres</small>
+                    </div>
+                </div>
+                <div class="p-formgrid grid">
+                    <div class="field col">
+                        <label for="souscompte">Sous Compte <span style="color: red"> *</span></label>
+                        <input type="text" pInputText id="souscompte" />
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !structure.telephone">Telephone est obligatoire et doit comporter 9 chiffres</small>
+                    </div>
+                </div>
+                <div class="p-formgrid grid">
+                    <div class="field col ">
+                        <label for="ModePaiement">Mode Paiement </label>
+                        <p-autoComplete appendTo="body"  [(ngModel)]="selectedItem" [virtualScroll]="true" [suggestions]="filteredModepaiement" [virtualScrollItemSize]="34" (completeMethod)="filterModepaiement($event)" field="libelle" [dropdown]="true"></p-autoComplete>
+                    </div>
+                    <div class="field col ">
+                        <label for="Action">Action <span style="color: red"> *</span></label>
+                        <p-autoComplete appendTo="body"  [(ngModel)]="selectedItem" [virtualScroll]="true" [suggestions]="filteredActions" [virtualScrollItemSize]="34" (completeMethod)="filterActions($event)" field="libelle" [dropdown]="true"></p-autoComplete>
+                    </div>
+                </div>
+                <div class="p-formgrid grid">
+                    <div class="field col">
+                        <label for="Chapeau">Chapeau<span style="color: red"> *</span></label>
+                        <p-autoComplete appendTo="body"  [(ngModel)]="selectedItem" [virtualScroll]="true" [suggestions]="filteredChapeaux" [virtualScrollItemSize]="34" (completeMethod)="filterChapeaux($event)" field="libelle" [dropdown]="true"></p-autoComplete>
+                    </div>
+                    <div class="field col">
+                        <label for="Type Compte">Type Compte <span style="color: red"> *</span></label>
+                        <p-autoComplete appendTo="body"  [(ngModel)]="selectedItem" [virtualScroll]="true" [suggestions]="filteredTypeCompte" [virtualScrollItemSize]="34" (completeMethod)="filterTypeCompte($event)" field="libelle" [dropdown]="true"></p-autoComplete>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple type="button" label="Annuler" icon="pi pi-times"  class="p-button-danger" (click)="hideDialog()"></button>
+                <button pButton pRipple type="button" label="Enregistrer" icon="pi pi-check"  class="p-button-success" (click)="saveProduct()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
